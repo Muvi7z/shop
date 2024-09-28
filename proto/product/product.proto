@@ -1,0 +1,84 @@
+syntax = "proto3";
+
+package product;
+
+option go_package = "shop.product.v1;productv1";
+
+service Product {
+  rpc GetProduct(GetProductRequest) returns (ProductResponse);
+  rpc GetProductsByCategory(GetProductsByCategoryRequest) returns (GetProductsByCategoryResponse);
+  rpc AddProduct(AddProductRequest) returns (AddProductResponse);
+  rpc EditProduct(EditProductRequest) returns (Empty);
+  rpc AddCategory(AddCategoryRequest) returns (AddCategoryResponse);
+  rpc GetRootCategories(Empty) returns (GetRootCategoriesResponse);
+}
+
+message GetProductRequest {
+  string id = 1;
+}
+
+message ProductResponse {
+  string id = 1;
+  string name = 2;
+  int64 price = 3;
+  int64 count = 4;
+  repeated string images = 5;
+  string description = 6;
+  int64 category_id = 7;
+}
+
+message GetProductsByCategoryRequest {
+  string category_id = 1;
+}
+
+message GetProductsByCategoryResponse {
+  repeated ProductResponse products = 1;
+}
+
+message AddProductRequest {
+  string name = 2;
+  int64 price = 3;
+  int64 count = 4;
+  repeated string images = 5;
+  string description = 6;
+  int64 category_id = 7;
+}
+
+message AddProductResponse {
+  string id = 1;
+}
+
+message EditProductRequest {
+  string name = 1;
+  int64 price = 2;
+  int64 count = 3;
+  repeated string images = 4;
+  string description = 5;
+  int64 category_id = 6;
+}
+
+message AddCategoryRequest {
+  string name = 1;
+  int64 parent_category = 2;
+}
+
+message AddCategoryResponse {
+  int64 category_id = 1;
+}
+
+message Category {
+  int64 id = 1;
+  string name = 2;
+  int64 parent_category = 3;
+}
+
+message  GetRootCategoriesResponse {
+  repeated Category categories = 1;
+}
+
+
+message Positive {
+  bool res = 1;
+}
+message Empty {}
+
